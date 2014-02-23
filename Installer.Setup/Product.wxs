@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="{E320E847-07AE-4D65-8474-0A6359373748}" 
+           Name="Installer.Setup" 
+           Language="1033" 
+           Version="1.0.0.0" 
+           Manufacturer="Mineman" 
+           UpgradeCode="0acd0c0a-1223-42ec-b205-417bf888a667">
+
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine"
+             Manufacturer="The Manufacturer"
+             Description="Description of Installer"
+             Keywords="Installer, MSI"
+             Comments="Comments 2014"/>
+
+    <!--<UIRef Id="WixUI_InstallDir"/>-->
+    <!--<Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />-->
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+
+		<Feature Id="Feature.Full" Title="Installer.Setup" Level="1">
+			<ComponentGroupRef Id="Component.Full" />
+		</Feature>
+    <Feature Id="Partial.Full" Title="Installer.Setup" Level="2">
+      <ComponentGroupRef Id="Component.Full" />
+    </Feature>
+  </Product>
+  
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="Installer.Setup" />
+			</Directory>
+		</Directory>
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="Component.Full" Directory="INSTALLFOLDER">
+			<!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+			 <Component Id="FILE.Installer.Library" Guid="{27363FCC-09A2-439F-BE58-76411B1F44FA}">
+         <File Source="$(var.Installer.Library.TargetPath)" KeyPath="yes" />
+			 </Component>
+      <Component Id="FILE.Installer.Shell" Guid="{2A145D66-4806-4BFB-AE34-141ED5F8D6F3}">
+        <File Source="$(var.Installer.Shell.TargetPath)" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>
